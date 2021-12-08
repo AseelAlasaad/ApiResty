@@ -7,7 +7,7 @@ function Form(props) {
   const[reqData,setreqData]= useState('');
   const[reqUrl, setreqUrl]= useState('');
   const[textarea,settextarea]=useState(false);
-  const[method,setmethod]=useState('GET');
+  const[method,setmethod]=useState('');
 
 
  const handleSubmit = (e) => {
