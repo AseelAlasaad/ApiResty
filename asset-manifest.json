@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/ApiResty/static/css/main.cafb0d77.chunk.css",
+    "main.js": "/ApiResty/static/js/main.41a5f187.chunk.js",
+    "main.js.map": "/ApiResty/static/js/main.41a5f187.chunk.js.map",
+    "runtime-main.js": "/ApiResty/static/js/runtime-main.2e2f79e1.js",
+    "runtime-main.js.map": "/ApiResty/static/js/runtime-main.2e2f79e1.js.map",
+    "static/js/2.c2ace50b.chunk.js": "/ApiResty/static/js/2.c2ace50b.chunk.js",
+    "static/js/2.c2ace50b.chunk.js.map": "/ApiResty/static/js/2.c2ace50b.chunk.js.map",
+    "index.html": "/ApiResty/index.html",
+    "static/css/main.cafb0d77.chunk.css.map": "/ApiResty/static/css/main.cafb0d77.chunk.css.map",
+    "static/js/2.c2ace50b.chunk.js.LICENSE.txt": "/ApiResty/static/js/2.c2ace50b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2e2f79e1.js",
+    "static/js/2.c2ace50b.chunk.js",
+    "static/css/main.cafb0d77.chunk.css",
+    "static/js/main.41a5f187.chunk.js"
+  ]
+}
