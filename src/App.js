@@ -7,61 +7,58 @@ import Results from './components/results/Result';
 import History from './components/history/History';
 import axios from 'axios';
 
+// import {makeHistory,historyReducer,initialState} from '../src/components/history/HistoryReducer';
 const initialState = {
-  history: []
+
+  history: [],
 };
 
 const historyReducer = (state = initialState, action) => {
   console.log('state', state);
   const { type, payload } = action;
   switch (type) {
-    case 'Make History':
-      return { ...state.history,payload:state.payload };
+    case 'History':
+      const history= [ ...state.history,payload.history];
     //  console.log('history',history);
-    //   return {history};
+      return {history};
     default:
       return state;
   }
 }
 
-function makeHistory(url,method) {
+function makeHistory(history) {
 
   return {
-    type: "Make History",
-    payload: {
-      url,
-      method
-
-    },
+    type: "History",
+    payload: {history},
   };
 
 }
 
 function App() {
-  const [state, dispatch] = useReducer(historyReducer, initialState);
-
-  const [Data, setData] = useState(null);
+  
+  const [data, setData] = useState(null);
   const [requestParams, setrequestParams] = useState({});
+  const [state, dispatch] = useReducer(historyReducer, initialState);
 
   console.log('state.history', state);
   useEffect(() => {
-
-    console.log('fetchData');
     try {
       async function fetchData() {
         if (requestParams.url) {
           // console.log(requestParams.url);
           const data = await axios({
-            url: requestParams.url,
-            method: requestParams.method
+            method: requestParams.method,
+            url: requestParams.url
           });
-          console.log(data);
+          
           setData(data);
-          dispatch(makeHistory(requestParams.url,requestParams.method));
+          dispatch(makeHistory(requestParams));
         }
 
       }
       fetchData();
+
     } catch (error) {
       console.log(error.message);
     }
@@ -70,32 +67,27 @@ function App() {
   }, [requestParams])
 
 
-  function callApi(formData) {
-
-    // console.log(requestParams.method);
+  async function callApi(formData) {
     setrequestParams(formData);
-    dispatch(makeHistory(requestParams));
-
-
-
+    dispatch(makeHistory(formData));
+  
   }
 
-  console.log('historystate', state);
+
   return (
+    <div>
     <React.Fragment>
       <Header />
       <div data-testid="Method-value" className="req">Request Method: {requestParams.method}</div>
       <div data-testid="URL-value" className="req">URL: {requestParams.url}</div>
       <Form handleApiCall={callApi} />
-      <History
-        history={state.history}
-        handleApiCall={callApi}
-      />
+     <History history={state.history} />
 
-      <Results data={Data} />
+      <Results data={data} />
 
       <Footer />
     </React.Fragment>
+    </div>
   );
 
 }

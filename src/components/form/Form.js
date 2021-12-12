@@ -4,38 +4,64 @@ import './form.scss';
 
 function Form(props) {
 
-  const[reqData,setreqData]= useState('');
-  const[reqUrl, setreqUrl]= useState('');
   const[textarea,settextarea]=useState(false);
   const[method,setmethod]=useState('');
+  const[reqUrl, setreqUrl]= useState('');
+  const[reqData,setreqData]= useState('');
 
 
- const handleSubmit = (e) => {
+ const handleSubmit = async(e) => {
+   try {
     e.preventDefault();
+    if(method=='GET' || method=='PUT')
+    {
+      setreqData(e.target.value);
+    }
     const formData = {
       method:method,
       url:reqUrl,
      
     };
-    props.handleApiCall(formData,reqData);
+    await props.handleApiCall(formData,reqData); 
+   } catch (error) {
+     console.log(error.message);
+   }
+  
   }
   const handleChangeURL = e => {
+    e.preventDefault();
     setreqUrl(e.target.value);
   }
   const handelmethod=(e)=>{
-    setmethod(e.target.value);
-    settextarea(false);
+    e.preventDefault();
+    // setmethod(e.target.id);
+    // settextarea(false);
+    switch (e.target.innerText) {
+      case 'GET':
+        setmethod('GET');
+        settextarea(false);
+        break;
+      case 'POST':
+        setmethod('POST');
+        settextarea(true);
+        break;
+      case 'PUT':
+        setmethod('PUT');
+        settextarea(true);
+        break;
+      case 'DELETE':
+        setmethod('DELETE');
+        settextarea(false);
+        break;
+      default: break;
+    }
   }
 
   const handelChandeData=(e)=>{
+    e.preventDefault();
     setreqData(e.target.value);
   }
 
-  const handeltextarea=(e)=>{
-    settextarea(true);
-    setmethod(e.target.id);
-    
-  }
 
     return (
       <>
@@ -46,12 +72,12 @@ function Form(props) {
             <button type="submit" data-testid="GO">GO!</button>
           </label>
           <label className="methods">
-            <button id="get"  onClick={handelmethod} value="GET">GET</button>
-            <button id="post" onClick={handeltextarea} value="POST">POST</button>
-            <button id="put" onClick={handeltextarea} value="PUT">PUT</button>
-            <button id="delete" onClick={handeltextarea} value="DELETE">DELETE</button>
+            <button id="get"  onClick={handelmethod} >GET</button>
+            <button id="post" onClick={handelmethod} >POST</button>
+            <button id="put" onClick={handelmethod} >PUT</button>
+            <button id="delete" onClick={handelmethod} >DELETE</button>
           </label>
-         {textarea && <textarea onChange={handelChandeData}  />}
+         {textarea && <textarea   rows="10" cols="60" onChange={handelChandeData} value={reqData} />}
         </form>
       </>
     );
